@@ -81,9 +81,7 @@ router.post('/:id/comments', (req, res) => {
 router.get('', (req, res) => { 
     Posts.find()
     .then(posts => {
-        res.status(201).json(
-            posts
-        )
+        res.status(201).json(posts)
     })
     .catch(error => {
         res.status(404).json({
@@ -91,6 +89,23 @@ router.get('', (req, res) => {
             error
         })
     })
+})
+
+//getPostById
+
+router.get('/:id/comments', (req, res) => { 
+    const { id } = req.params;
+    Posts.findById(id)
+    .then(posts => {
+        res.status(201).json(posts) 
+    })
+    .catch(error => {
+        res.status(404).json({
+            message: "The post with the specified ID does not exist.",
+            error
+        })
+    })
+    
 })
 
 module.exports = router;
