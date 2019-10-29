@@ -22,7 +22,7 @@ router.post('', (req, res) => {
         .then(data => {
             res.status(201).json({
                 success: true,
-                data
+                data: data.body
             })
         })
         .catch(error => {
@@ -33,5 +33,47 @@ router.post('', (req, res) => {
         })
     }
     });
+
+
+
+//insertCommentById
+
+router.post('/:id/comments', (req, res) => {
+    const { id } = req.params;
+    const newPost = req.body;
+    const { contents } = newPost;
+    if(!id){
+        res
+        .status(404)
+        .json({
+            message: "The post with the specified ID does not exist."
+        });
+    }
+    else if (!contents) {
+        res
+        .status(400)
+        .json({
+            errorMessage: "Please provide text for the comment."
+        });
+    }
+    else{
+        Posts.insertComment({
+                text: contents,
+                post_id: id
+        })
+        .then(comment => {
+            res.status(201).json({
+                success: true, 
+                comment
+            })
+        })
+        .catch(() => {
+            res.status(500).json({
+
+                error: "There was an error while saving the comment to the database."
+            });
+        });
+    }
+})
 
 module.exports = router;
