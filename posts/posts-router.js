@@ -76,4 +76,21 @@ router.post('/:id/comments', (req, res) => {
     }
 })
 
+//getPosts
+
+router.get('', (req, res) => { 
+    Posts.find()
+    .then(posts => {
+        res.status(201).json(
+            posts
+        )
+    })
+    .catch(error => {
+        res.status(404).json({
+            message: "The post information could not be retrieved",
+            error
+        })
+    })
+})
+
 module.exports = router;
