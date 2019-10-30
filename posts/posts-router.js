@@ -133,7 +133,7 @@ router.get('/:id/comments', (req, res) => {
     });
 })
 
-//deletePost(s)
+//deletePost
 
 router.delete('/:id', (req, res) => {
     const { id } = req.params;
@@ -149,14 +149,15 @@ router.delete('/:id', (req, res) => {
         res.status(404).json({message: "The post with the specified ID does not exist" }
         )
     })
-    .catch(error => {
+    .catch(() => {
         res.status(500).json({
-            message: "Could not delete post"
+            error: "Could not delete post"
         })
     })
 
     })
 
+//updatePost
 
 router.put('/:id', (req, res) => {
     const update = req.body;
